@@ -1,0 +1,1 @@
+Write-Host "Starting the PowerShell script..."
