@@ -1,2 +1,2 @@
-Write-Host "Starting the PowerShell script..."
-Write-Host "Listing all files in the current directory:"
+
+Get-Service | Where-Object {$_.StartTime -gt (Get-Date).AddHours(-1)}
