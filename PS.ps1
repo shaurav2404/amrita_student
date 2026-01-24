@@ -1,2 +1,9 @@
+function get-messsage {
+    param (
+       # Parameter help description
+       [Parameter(Mandatory=$false)][string]$name 
+           )
+    return "Hello, $name!"
+}
 
-Get-Service | Where-Object {$_.StartTime -gt (Get-Date).AddHours(-1)}
+get-messsage 
