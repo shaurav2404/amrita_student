@@ -1,24 +1,25 @@
-function Test-PSDriveSpace {
+function Get-ServiceStatus {
     param (
-        [string]$Drive = "C:",
-        [int]$MinFreeGB = 382
+        [Parameter(Mandatory=$true)]
+        [string]$ServiceName
     )
-    $disk = Get-CimInstance Win32_LogicalDisk | 
-            Where-Object { $_.DeviceID -eq $Drive }  #heart of the program
-    if (-not $disk) {
-        Write-Host "Drive $Drive not found."
-        return #exit the function
+    try {
+     
+           $service = Get-Service -Name $ServiceName -ErrorAction Stop
+    
+    if ($service.Status -eq "Running") 
+    {
+        return "Service '$ServiceName' is running." 
     }
-    $freeGB = [math]::Round($disk.FreeSpace / 1GB, 2)
-  
-
-
-
- if ($freeGB -lt $MinFreeGB) {
-        Write-Host "WARNING: Low disk space on $Drive ₹ ₹ Free: $freeGB GB"
+    else 
+    {
+        return "Service '$ServiceName' is not running."
     }
-    else {
-        Write-Host "OK: Disk space on $Drive is healthy -------------Free: $freeGB GB"
     }
+    catch 
+    {
+        return "Service '$ServiceName' not found."
+    }
+    
 }
-Test-PSDriveSpace
+Get-ServiceStatus
